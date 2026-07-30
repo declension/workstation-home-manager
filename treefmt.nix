@@ -18,21 +18,6 @@
           settings.formatter.retain_line_breaks_single = true;
         };
       };
-
-      # The Ansible tree is retained for comparison only — don't reformat it.
-      settings.global.excludes = [
-        "playbook.yml"
-        "requirements.yml"
-        "group_vars/**"
-        "roles/**"
-        "templates/**"
-        ".circleci/**"
-        "Dockerfile"
-        "Dockerfile.manjaro"
-        ".idea/**"
-        "LICENSE"
-        "*.lock"
-      ];
     };
   };
 }

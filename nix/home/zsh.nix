@@ -15,6 +15,8 @@
       enable = true;
       theme = "robbyrussell";
 
+      # The language-toolchain plugins are just aliases,
+      # and come into their own inside a project devShell.
       plugins = [
         "git"
         "git-extras"
@@ -33,7 +35,6 @@
         "aws"
         "kubectl"
         "terraform" # `tf`/`tfp` aliases, against opentofu
-        "stack"
       ];
 
       # Placed *before* oh-my-zsh.sh is sourced, which is what these need.

@@ -1,6 +1,7 @@
 {username, ...}: {
   imports = [
     ./packages.nix
+    ./shell-tools.nix
     ./zsh.nix
     ./tmux.nix
     ./git.nix
@@ -30,6 +31,7 @@
 
   programs.home-manager.enable = true;
 
-  # Makes fonts installed here visible to fontconfig.
+  # Makes fonts installed here visible to fontconfig —
+  # including to the pacman-installed Alacritty.
   fonts.fontconfig.enable = true;
 }
