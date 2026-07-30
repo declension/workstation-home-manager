@@ -1,10 +1,10 @@
-# CLI-only by design.
+# CLI only, by design.
 #
 # Two things deliberately don't live here:
 #
 #   - Language toolchains (JDK, node, rust, GHC, python).
-#     These belong in a per-project `flake.nix` devShell,
-#     picked up automatically by direnv — see zsh.nix.
+#     Those belong in a per-project `flake.nix` devShell,
+#     picked up automatically by direnv — see shell-tools.nix.
 #
 #   - GUI applications.
 #     On non-NixOS these hit OpenGL, xdg-portal and font-integration friction,
@@ -21,13 +21,13 @@
     pass
     gnupg # `pass` is useless without it
 
-    # Modern replacements for the old coreutils-adjacent set
-    eza # was `tree`, and ls
+    # Search & inspect
+    eza # ls, and tree
     fd
     ripgrep
-    ripgrep-all # ripgrep over pdfs/archives/etc
+    ripgrep-all # ripgrep over pdfs, archives, etc
     bat
-    btop # was `htop`
+    btop
 
     # Networking
     nmap

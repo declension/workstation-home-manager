@@ -1,6 +1,5 @@
-# The playbook installed the git-lfs package but never ran `git lfs install`,
-# so LFS smudge/clean filters were never actually registered.
-# `lfs.enable` closes that gap declaratively.
+# `lfs.enable` registers the smudge/clean filters,
+# which installing the git-lfs package alone does not do.
 #
 # User identity is deliberately left unset —
 # it varies per machine and per checkout.

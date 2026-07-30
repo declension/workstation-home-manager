@@ -1,4 +1,3 @@
-# Supersedes the playbook's templates/zshrc.in and the nover.ohmyzsh role.
 {
   programs.zsh = {
     enable = true;
@@ -16,9 +15,8 @@
       enable = true;
       theme = "robbyrussell";
 
-      # Plugins for language toolchains are kept even though those toolchains
-      # are no longer global: they're aliases, and they come into their own
-      # inside a project devShell.
+      # The language-toolchain plugins are just aliases,
+      # and come into their own inside a project devShell.
       plugins = [
         "git"
         "git-extras"
@@ -36,7 +34,7 @@
         "httpie"
         "aws"
         "kubectl"
-        "terraform" # gives `tf`/`tfp` aliases, now against opentofu
+        "terraform" # `tf`/`tfp` aliases, against opentofu
       ];
 
       # Placed *before* oh-my-zsh.sh is sourced, which is what these need.
@@ -55,8 +53,7 @@
 
   programs.starship.enable = true;
 
-  # Stands in for the oh-my-zsh `command-not-found` plugin,
-  # which relied on Arch's pkgfile hooks
-  # and wouldn't see anything installed via Nix.
+  # command-not-found for Nix packages.
+  # Arch's own pkgfile hooks can't see the Nix store.
   programs.nix-index.enable = true;
 }

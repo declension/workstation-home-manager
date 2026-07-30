@@ -17,8 +17,7 @@
     # bump only when you've read the release notes for the versions in between.
     stateVersion = "25.05";
 
-    # Supersedes the playbook's hand-rolled `export PATH=...`
-    # and its `~/.local/bin` mkdir task.
+    # For things installed outside Nix.
     sessionPath = [
       "$HOME/.local/bin"
       "$HOME/bin"
@@ -26,14 +25,13 @@
 
     sessionVariables = {
       EDITOR = "vim";
-      # Carried over from the old zshrc (ccache for C/Android work).
-      USE_CCACHE = "1";
+      USE_CCACHE = "1"; # ccache, for C/Android work
     };
   };
 
   programs.home-manager.enable = true;
 
-  # Makes fonts in ~/.nix-profile (the Meslo Nerd Font) visible to fontconfig
-  # system-wide — including to the pacman-installed Alacritty.
+  # Makes fonts installed here visible to fontconfig —
+  # including to the pacman-installed Alacritty.
   fonts.fontconfig.enable = true;
 }

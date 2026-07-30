@@ -1,8 +1,5 @@
-# Supersedes the playbook's templates/tmux.conf, the nephelaiio.tmux role,
-# and its hand-rolled tpm clone tasks.
-# home-manager wires plugins in directly,
-# so there is no tpm, no ~/.tmux/plugins,
-# and no `git` tasks to keep in sync.
+# Plugins are wired in by home-manager,
+# so there's no tpm and no ~/.tmux/plugins to keep in sync.
 {pkgs, ...}: {
   programs.tmux = {
     enable = true;
@@ -11,9 +8,7 @@
     keyMode = "vi";
     mouse = true;
 
-    # The original `set -s escape 1` was not a valid tmux option name
-    # (`escape-time` is), so it silently did nothing.
-    # 10ms keeps the intent without the risk 1ms carries over a laggy SSH link.
+    # Low, but not so low that ESC-prefixed sequences break over a laggy link.
     escapeTime = 10;
 
     plugins = with pkgs.tmuxPlugins; [
@@ -23,19 +18,9 @@
       yank
       better-mouse-mode
     ];
-    # Not carried over from the old tmux.conf:
-    #
-    #   - seebi/tmux-colors-solarized and nhdaly/tmux-scroll-copy-mode:
-    #     I could not find a nixpkgs `tmuxPlugins` attribute for either.
-    #     Add them with `pkgs.tmuxPlugins.mkTmuxPlugin` if you want them back.
-    #
-    #   - the powerline status-bar config:
-    #     `status off` below made it dead weight,
-    #     and starship already owns the prompt.
-    #
-    #   - `bind r source-file`:
-    #     the config now lives on a read-only store path,
-    #     so `home-manager switch` is the reload path.
+    # `seebi/tmux-colors-solarized` and `nhdaly/tmux-scroll-copy-mode` are
+    # absent: neither appears to have a nixpkgs `tmuxPlugins` attribute.
+    # Add them with `pkgs.tmuxPlugins.mkTmuxPlugin` if you want them.
 
     extraConfig = ''
       set  -g  status off
@@ -47,10 +32,7 @@
       bind c new-window -c "#{pane_current_path}"
       bind = select-layout even-vertical
 
-      # The original `bind \ kill-session` left the backslash unescaped,
-      # so it bound the wrong thing.
       bind '\' kill-session
-
       bind x confirm kill-pane
       bind C-s set-window-option synchronize-panes
 
