@@ -1,10 +1,15 @@
-# Grouped to mirror roles/workstation/tasks/{main,manjaro}.yml
-# so the two trees can be read side by side.
+# CLI-only by design.
 #
-# Not included, because the Arch path never had them:
-# poetry and awscli were installed only in ubuntu.yml,
-# and manjaro.yml left them as `# TODO: Poetry + AWSCLI`.
-# Adding either is a modernisation decision, not a parity one.
+# Two things deliberately don't live here:
+#
+#   - Language toolchains (JDK, node, rust, GHC, python).
+#     These belong in a per-project `flake.nix` devShell,
+#     picked up automatically by direnv — see zsh.nix.
+#
+#   - GUI applications.
+#     On non-NixOS these hit OpenGL, xdg-portal and font-integration friction,
+#     so they come from pacman instead — see the README.
+#     Their *config* is still managed here where home-manager supports it.
 {pkgs, ...}: {
   home.packages = with pkgs; [
     # Core CLI
@@ -13,16 +18,20 @@
     curl
     httpie
     jq
-    htop
-    tree
-    multitail
     pass
-    gnupg # `pass` is useless without it; was implicit on Arch before
+    gnupg # `pass` is useless without it
+
+    # Modern replacements for the old coreutils-adjacent set
+    eza # was `tree`, and ls
+    fd
+    ripgrep
+    ripgrep-all # ripgrep over pdfs/archives/etc
+    bat
+    btop # was `htop`
 
     # Networking
-    nettools
     nmap
-    openvpn # CLI only - see README for the NetworkManager plugin
+    openvpn # CLI only; the NetworkManager plugin is a pacman package
 
     # Jokes
     cowsay
@@ -36,32 +45,18 @@
     yamllint
     kubectl
     yq-go
-    opentofu # replaces the pinned terraform 1.1.9 tarball
+    opentofu
 
-    # Languages & toolchains
-    jdk17
-    nodejs_22 # was nodejs-lts-gallium (16), long since EOL
-    python3
-    rustup
-    stack
-    ghc
+    # Docs
+    pandoc
 
-    # Terminal tooling (previously built from source by cargo)
-    ripgrep
-    bat
-
-    # Containers - CLI only, the daemon is system-level (see README)
+    # Containers — CLI only, the daemon is system-level (see README)
     docker-client
     docker-compose
 
-    # Desktop apps
-    gimp
-    pandoc
-    mplayer
-    signal-desktop
-    slack
-
-    # Fonts
+    # Fonts.
+    # Kept in Nix even though the terminal is a pacman package:
+    # fonts.fontconfig.enable makes these visible to fontconfig system-wide.
     nerd-fonts.meslo-lg
   ];
 }

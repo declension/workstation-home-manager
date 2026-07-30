@@ -1,4 +1,4 @@
-# Replaces templates/zshrc.in, plus the nover.ohmyzsh Galaxy role.
+# Supersedes the playbook's templates/zshrc.in and the nover.ohmyzsh role.
 {
   programs.zsh = {
     enable = true;
@@ -16,6 +16,9 @@
       enable = true;
       theme = "robbyrussell";
 
+      # Plugins for language toolchains are kept even though those toolchains
+      # are no longer global: they're aliases, and they come into their own
+      # inside a project devShell.
       plugins = [
         "git"
         "git-extras"
@@ -33,8 +36,7 @@
         "httpie"
         "aws"
         "kubectl"
-        "terraform" # still gives `tf`/`tfp` aliases, now against opentofu
-        "stack"
+        "terraform" # gives `tf`/`tfp` aliases, now against opentofu
       ];
 
       # Placed *before* oh-my-zsh.sh is sourced, which is what these need.

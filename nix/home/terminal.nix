@@ -1,16 +1,17 @@
-# Alacritty came from `cargo install` via hurricanehrndz.rustup before,
-# with no config at all —
-# only an `update-alternatives` call to make it the default x-terminal-emulator.
-# That call was Debian-only, and is dropped here.
+# Alacritty itself comes from pacman.
+# A Nix-built Alacritty on non-NixOS has to find the system's OpenGL drivers,
+# which means wrapping it in nixGL;
+# using the distro package sidesteps that entirely.
 #
-# NOTE: on Arch (non-NixOS),
-# a Nix-built Alacritty has to find the system's OpenGL/driver libraries.
-# If it fails to start, see the README:
-# installing `alacritty` from pacman and keeping just this config
-# is the simplest fix.
+# The *config* is still managed here — `package = null` tells home-manager to
+# write ~/.config/alacritty/alacritty.toml without installing the binary.
+#
+# The font comes from nerd-fonts.meslo-lg in packages.nix,
+# which fontconfig picks up via fonts.fontconfig.enable.
 {
   programs.alacritty = {
     enable = true;
+    package = null;
 
     settings = {
       font = {

@@ -1,5 +1,5 @@
-# Replaces templates/tmux.conf, the nephelaiio.tmux Galaxy role,
-# and the hand-rolled tpm clone tasks.
+# Supersedes the playbook's templates/tmux.conf, the nephelaiio.tmux role,
+# and its hand-rolled tpm clone tasks.
 # home-manager wires plugins in directly,
 # so there is no tpm, no ~/.tmux/plugins,
 # and no `git` tasks to keep in sync.
@@ -23,7 +23,7 @@
       yank
       better-mouse-mode
     ];
-    # Not carried over from templates/tmux.conf:
+    # Not carried over from the old tmux.conf:
     #
     #   - seebi/tmux-colors-solarized and nhdaly/tmux-scroll-copy-mode:
     #     I could not find a nixpkgs `tmuxPlugins` attribute for either.

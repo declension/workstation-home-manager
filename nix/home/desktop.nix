@@ -1,4 +1,5 @@
-# Replaces the three `gsettings set` shell-outs in roles/configure/tasks/main.yml.
+# Supersedes the three `gsettings set` shell-outs in the playbook's
+# configure role.
 # dconf.settings is declarative and idempotent,
 # and unlike the Ansible version
 # it doesn't need a `stat` check on /usr/bin/gsettings first.
