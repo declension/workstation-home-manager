@@ -1,0 +1,36 @@
+name: Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Lint & evaluate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: cachix/install-nix-action@v30
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      # Runs the treefmt check (alejandra, deadnix, statix, yamlfmt)
+      # and validates the flake's outputs.
+      - name: nix flake check
+        run: nix flake check --print-build-logs
+
+      # `nix flake check` only shallow-checks `homeConfigurations`,
+      # because it # isn't a standard flake output — so build it explicitly.
+      # This is what # actually catches a bad package attribute or home-manager option.
+      - name: Build home configuration
+        run: |
+          nix build --print-build-logs \
+            .#homeConfigurations.nick.activationPackage

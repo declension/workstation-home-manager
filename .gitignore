@@ -1,3 +1,8 @@
 *.retry
 
 .idea/
+
+# Nix
+result
+result-*
+.direnv/
