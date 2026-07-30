@@ -1,4 +1,3 @@
-# Replaces templates/zshrc.in, plus the nover.ohmyzsh Galaxy role.
 {
   programs.zsh = {
     enable = true;
@@ -33,7 +32,7 @@
         "httpie"
         "aws"
         "kubectl"
-        "terraform" # still gives `tf`/`tfp` aliases, now against opentofu
+        "terraform" # `tf`/`tfp` aliases, against opentofu
         "stack"
       ];
 
@@ -53,8 +52,7 @@
 
   programs.starship.enable = true;
 
-  # Stands in for the oh-my-zsh `command-not-found` plugin,
-  # which relied on Arch's pkgfile hooks
-  # and wouldn't see anything installed via Nix.
+  # command-not-found for Nix packages.
+  # Arch's own pkgfile hooks can't see the Nix store.
   programs.nix-index.enable = true;
 }

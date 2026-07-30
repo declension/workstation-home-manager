@@ -16,8 +16,7 @@
     # bump only when you've read the release notes for the versions in between.
     stateVersion = "25.05";
 
-    # Replaces the hand-rolled `export PATH=...` in templates/zshrc.in,
-    # and the `~/.local/bin` mkdir in roles/workstation/tasks/main.yml.
+    # For things installed outside Nix.
     sessionPath = [
       "$HOME/.local/bin"
       "$HOME/bin"
@@ -25,14 +24,12 @@
 
     sessionVariables = {
       EDITOR = "vim";
-      # Carried over from templates/zshrc.in (ccache for C/Android work).
-      USE_CCACHE = "1";
+      USE_CCACHE = "1"; # ccache, for C/Android work
     };
   };
 
   programs.home-manager.enable = true;
 
-  # Makes fonts in ~/.nix-profile (the Meslo Nerd Font) visible to fontconfig,
-  # replacing the ttf-meslo-nerd-font-powerlevel10k pacman package.
+  # Makes fonts installed here visible to fontconfig.
   fonts.fontconfig.enable = true;
 }

@@ -8,15 +8,18 @@
       projectRootFile = "flake.nix";
 
       programs = {
-        alejandra.enable = true;
-        deadnix.enable = true;
-        statix.enable = true;
+        alejandra.enable = true; # formatter
+        deadnix.enable = true; # dead code
+        statix.enable = true; # anti-patterns
+
+        yamlfmt = {
+          enable = true; # the CI workflow
+          # Otherwise it strips the blank lines between blocks.
+          settings.formatter.retain_line_breaks_single = true;
+        };
       };
 
-      # The Ansible tree is kept only for side-by-side comparison
-      # during the migration.
-      # Don't reformat it — that would add noise to the diff.
-      # Delete these excludes (and the files) once the migration is signed off.
+      # The Ansible tree is retained for comparison only — don't reformat it.
       settings.global.excludes = [
         "playbook.yml"
         "requirements.yml"

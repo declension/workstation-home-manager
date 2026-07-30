@@ -1,10 +1,3 @@
-# Grouped to mirror roles/workstation/tasks/{main,manjaro}.yml
-# so the two trees can be read side by side.
-#
-# Not included, because the Arch path never had them:
-# poetry and awscli were installed only in ubuntu.yml,
-# and manjaro.yml left them as `# TODO: Poetry + AWSCLI`.
-# Adding either is a modernisation decision, not a parity one.
 {pkgs, ...}: {
   home.packages = with pkgs; [
     # Core CLI
@@ -17,12 +10,12 @@
     tree
     multitail
     pass
-    gnupg # `pass` is useless without it; was implicit on Arch before
+    gnupg # `pass` is useless without it
 
     # Networking
     nettools
     nmap
-    openvpn # CLI only - see README for the NetworkManager plugin
+    openvpn # CLI only; the NetworkManager plugin is a pacman package
 
     # Jokes
     cowsay
@@ -36,21 +29,21 @@
     yamllint
     kubectl
     yq-go
-    opentofu # replaces the pinned terraform 1.1.9 tarball
+    opentofu
 
     # Languages & toolchains
     jdk17
-    nodejs_22 # was nodejs-lts-gallium (16), long since EOL
+    nodejs_22
     python3
     rustup
     stack
     ghc
 
-    # Terminal tooling (previously built from source by cargo)
+    # Terminal tooling
     ripgrep
     bat
 
-    # Containers - CLI only, the daemon is system-level (see README)
+    # Containers — CLI only, the daemon is system-level (see README)
     docker-client
     docker-compose
 
