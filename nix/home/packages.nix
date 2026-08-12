@@ -12,6 +12,8 @@
 #     Their *config* is still managed here where home-manager supports it.
 {pkgs, ...}: {
   home.packages = with pkgs; [
+    # Nix
+    cachix
     # Core CLI
     git-lfs
     vim

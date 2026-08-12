@@ -6,7 +6,7 @@
   withSystem,
   ...
 }: let
-  username = "nick";
+  username = "nickb-gen";
 in {
   flake.homeConfigurations.${username} = withSystem "x86_64-linux" ({pkgs, ...}:
     inputs.home-manager.lib.homeManagerConfiguration {
