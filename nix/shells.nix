@@ -11,6 +11,7 @@
         # Take the CLI from the flake input so it can't drift from the modules.
         inputs'.home-manager.packages.home-manager
         pkgs.git
+        pkgs.claude-code
         pkgs.nix-output-monitor
       ];
 
