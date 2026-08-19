@@ -17,7 +17,7 @@ flake.nix                     inputs + mkFlake, imports the spokes below
 treefmt.nix                   linting/formatting for `nix fmt` + `nix flake check`
 nix/
   shells.nix                  devShells.default
-  home-configurations.nix     wires homeConfigurations.nick -> nix/home
+  home-configurations.nix     wires homeConfigurations.$USER (+ .example) -> nix/home
   home/
     default.nix               home.* basics, imports the rest
     packages.nix              home.packages
@@ -63,15 +63,23 @@ Usage
 curl -sSfL https://artifacts.nixos.org/nix-installer | sh -s -- install --enable-flakes
 ```
 
+### One-time: work machine only
+If this is a work machine, copy `.env.example` to `.env` and list your work
+account's username in `HM_WORK_USERNAMES` — `git.nix` uses that to pick the
+work vs personal git identity. Personal machines can skip this.
+
 ### Apply the configuration
+`homeConfigurations` is keyed by `$USER`, resolved at build time
+(hence `--impure`) so no username is ever committed to this repo.
+
 ```shell
-nix run github:nix-community/home-manager -- switch --flake .#nick
+nix run github:nix-community/home-manager -- switch --impure --flake .
 ```
 
 After the first switch, `home-manager` is on `$PATH`:
 
 ```shell
-home-manager switch --flake .#nick
+home-manager switch --impure --flake .
 ```
 
 ### Develop
@@ -86,8 +94,11 @@ because it isn't a standard flake output.
 To actually typecheck the home config, build it:
 
 ```shell
-nix build .#homeConfigurations.nick.activationPackage
+nix build --impure .#homeConfigurations.$USER.activationPackage
 ```
+
+CI instead builds the `example` entry — a fixed, non-personal stand-in that
+doesn't depend on `$USER` — since it has no real account to build for.
 
 CI runs both, on every push and PR.
 
@@ -147,9 +158,9 @@ Known gaps
   `seebi/tmux-colors-solarized` and `nhdaly/tmux-scroll-copy-mode`
   don't appear to have nixpkgs `tmuxPlugins` attributes.
   Add them with `pkgs.tmuxPlugins.mkTmuxPlugin` if you want them.
-- **Single host.**
-  `homeConfigurations` has one entry, hardcoded to `nick` on `x86_64-linux`.
-  Worth generalising if this ever needs to cover a second machine.
+- **Single system.**
+  `homeConfigurations` targets `x86_64-linux` only.
+  Worth generalising if this ever needs to cover another architecture.
 - **Nothing here has been run on a real desktop yet.**
   CI proves it evaluates and builds;
   it can't prove Alacritty renders or that the dconf keys land.

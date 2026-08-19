@@ -1,5 +1,8 @@
 .idea/
 
+# Local secrets/overrides — see .env.example
+.env
+
 # Nix
 result
 result-*

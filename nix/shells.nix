@@ -16,7 +16,7 @@
       ];
 
       shellHook = ''
-        echo "workstation-home-manager: 'home-manager switch --flake .#nick' to apply"
+        echo "workstation-home-manager: 'home-manager switch --impure --flake .' to apply"
       '';
     };
   };

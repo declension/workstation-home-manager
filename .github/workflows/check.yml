@@ -30,7 +30,8 @@ jobs:
       # `nix flake check` only shallow-checks `homeConfigurations`,
       # because it # isn't a standard flake output — so build it explicitly.
       # This is what # actually catches a bad package attribute or home-manager option.
+      # `example` is a fixed, non-personal entry — see nix/home-configurations.nix.
       - name: Build home configuration
         run: |
           nix build --print-build-logs \
-            .#homeConfigurations.nick.activationPackage
+            .#homeConfigurations.example.activationPackage
