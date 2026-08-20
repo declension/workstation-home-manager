@@ -18,7 +18,20 @@
         normal.family = "MesloLGS Nerd Font";
         size = 11.0;
       };
-      window.opacity = 0.95;
+      terminal.shell = "tmux";
+      window = {
+        opacity = 0.92;
+        dimensions = {
+          columns = 150;
+          lines = 50;
+        };
+        padding = {
+          x = 6;
+          y = 6;
+        };
+        blur = true;
+        resize_increments = true;
+      };
       scrolling.history = 50000;
     };
   };

@@ -46,6 +46,9 @@
     };
 
     initContent = ''
+      # Creds and cross-shell aliases live there, not in this repo.
+      [[ -f "$HOME/.profile" ]] && source "$HOME/.profile"
+
       # It's annoying, IMO
       unsetopt autocd
     '';
