@@ -3,6 +3,7 @@
     ./packages.nix
     ./shell-tools.nix
     ./zsh.nix
+    ./prompt.nix
     ./tmux.nix
     ./git.nix
     ./terminal.nix

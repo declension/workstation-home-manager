@@ -13,7 +13,9 @@
 
     oh-my-zsh = {
       enable = true;
-      theme = "robbyrussell";
+      # No theme: starship draws the prompt (see prompt.nix), and an oh-my-zsh
+      # theme would only build a PROMPT that starship then overwrites.
+      theme = "";
 
       # The language-toolchain plugins are just aliases,
       # and come into their own inside a project devShell.
@@ -53,8 +55,6 @@
       unsetopt autocd
     '';
   };
-
-  programs.starship.enable = true;
 
   # command-not-found for Nix packages.
   # Arch's own pkgfile hooks can't see the Nix store.
