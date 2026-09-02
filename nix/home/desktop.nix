@@ -15,6 +15,14 @@
         switch-to-workspace-left = ["<Control><Super>Left"];
         switch-to-workspace-right = ["<Control><Super>Right"];
       };
+
+      # Never auto-suspend on mains.
+      # On laptops where firmware only offers s2idle,
+      # residency can be poor enough that an unattended suspend flattens the battery.
+      # Wanted on every machine, not just those.
+      "org/gnome/settings-daemon/plugins/power" = {
+        sleep-inactive-ac-type = "nothing";
+      };
     };
   };
 }
