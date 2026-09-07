@@ -21,7 +21,12 @@ in {
       # Override those with `git config user.email ...` in the repo.
       settings = {
         alias = {
-          cleanup = "!git branch -r --merged | grep -v main | sed 's@origin/@@' | xargs --no-run-if-empty -n 1 git push --delete origin";
+          # `cleanup` lists; `cleanup-force` deletes.
+          # Merged against the default branch, not HEAD: bare `--merged` sweeps up
+          # whatever's merged into the current checkout, including itself.
+          # `fetch --prune` is load-bearing — a stale ref still looks merged.
+          cleanup = ''!f() { t="''${1:-$(git symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null || echo origin/main)}"; git fetch --prune --quiet || return 1; git rev-parse --verify --quiet "$t" >/dev/null || { echo "cleanup: no such ref: $t" >&2; return 1; }; git for-each-ref --format='%(refname:lstrip=3)%09%(symref)' --merged "$t" refs/remotes/origin | awk -F'\t' '$2 == "" { print $1 }' | grep -vxE 'main|master|develop|staging|production|release/.*' | grep -vxF "$(git symbolic-ref --quiet --short HEAD || echo)" || true; }; f'';
+          cleanup-force = ''!f() { git cleanup "$@" | xargs --no-run-if-empty -n1 git push --delete origin; }; f'';
         };
         user = {
           name = "Nick Boultbee";
