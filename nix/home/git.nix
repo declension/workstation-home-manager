@@ -23,12 +23,12 @@
     set -euo pipefail
 
     protected='main|master|develop|staging|production|release/.*'
-    log() { printf '%s\n' "$*" >&2; }
+    log() { printf '[%s]\t%s\n' $(date +%H:%M:%S) "$*" >&2; }
     count() { grep -c . || true; }
 
     target="''${1:-$(git symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null || echo origin/main)}"
 
-    log "Fetching origin and pruning stale remote-tracking refs..."
+    log "Fetching origin and pruning stale remote-tracking refs…"
     git fetch --prune --quiet
 
     if ! git rev-parse --verify --quiet "$target" >/dev/null; then
